@@ -328,9 +328,7 @@ QueryThreadsResponse _$QueryThreadsResponseFromJson(
 GetThreadResponse _$GetThreadResponseFromJson(Map<String, dynamic> json) =>
     GetThreadResponse()
       ..duration = json['duration'] as String?
-      ..thread = json['thread'] == null
-          ? []
-          : ThreadState.fromJson(json['thread'] as Map<String, dynamic>);
+      ..thread = ThreadState.fromJson(json['thread'] as Map<String, dynamic>);
 
 PartialUpdateThreadResponse _$PartialUpdateThreadResponseFromJson(
         Map<String, dynamic> json) =>

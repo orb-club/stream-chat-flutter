@@ -556,7 +556,6 @@ class QueryThreadsResponse extends _BaseResponse {
 @JsonSerializable(createToJson: false)
 class GetThreadResponse extends _BaseResponse {
   /// List of channels state returned by the query
-  @JsonKey(defaultValue: [])
   late ThreadState thread;
 
   /// Create a new instance from a json
