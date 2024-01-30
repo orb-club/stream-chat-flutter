@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:stream_chat/src/client/client.dart';
 import 'package:stream_chat/src/core/api/call_api.dart';
+import 'package:stream_chat/src/core/api/thread_api.dart';
 import 'package:stream_chat/src/core/error/error.dart';
 import 'package:stream_chat/src/core/models/banned_user.dart';
 import 'package:stream_chat/src/core/models/call_payload.dart';
@@ -12,6 +13,8 @@ import 'package:stream_chat/src/core/models/member.dart';
 import 'package:stream_chat/src/core/models/message.dart';
 import 'package:stream_chat/src/core/models/reaction.dart';
 import 'package:stream_chat/src/core/models/read.dart';
+import 'package:stream_chat/src/core/models/thread_model.dart';
+import 'package:stream_chat/src/core/models/thread_state.dart';
 import 'package:stream_chat/src/core/models/user.dart';
 
 part 'responses.g.dart';
@@ -74,7 +77,7 @@ class QueryChannelsResponse extends _BaseResponse {
       _$QueryChannelsResponseFromJson(json);
 }
 
-/// Model response for [StreamChatClient.queryChannels] api call
+/// Model response for [StreamChatClient.translateMessage] api call
 @JsonSerializable(createToJson: false)
 class TranslateMessageResponse extends _BaseResponse {
   /// Translated message
@@ -85,7 +88,7 @@ class TranslateMessageResponse extends _BaseResponse {
       _$TranslateMessageResponseFromJson(json);
 }
 
-/// Model response for [StreamChatClient.queryChannels] api call
+/// Model response for [StreamChatClient.queryMembers] api call
 @JsonSerializable(createToJson: false)
 class QueryMembersResponse extends _BaseResponse {
   /// List of channels state returned by the query
@@ -529,4 +532,45 @@ class CreateCallPayload extends _BaseResponse {
 
   /// The call object.
   CallPayload? call;
+}
+
+/// Model response for [ThreadApi.queryThreads] api call
+@JsonSerializable(createToJson: false)
+class QueryThreadsResponse extends _BaseResponse {
+  /// List of channels state returned by the query
+  @JsonKey(defaultValue: [])
+  late List<ThreadState> threads;
+
+  /// A key used to paginate forward.
+  String? next;
+
+  /// A key used to paginate backward.
+  String? prev;
+
+  /// Create a new instance from a json
+  static QueryThreadsResponse fromJson(Map<String, dynamic> json) =>
+      _$QueryThreadsResponseFromJson(json);
+}
+
+/// Model response for [ThreadApi.getThread] api call
+@JsonSerializable(createToJson: false)
+class GetThreadResponse extends _BaseResponse {
+  /// List of channels state returned by the query
+  @JsonKey(defaultValue: [])
+  late ThreadState thread;
+
+  /// Create a new instance from a json
+  static GetThreadResponse fromJson(Map<String, dynamic> json) =>
+      _$GetThreadResponseFromJson(json);
+}
+
+/// Model response for [ThreadApi.updateThreadPartial] api call
+@JsonSerializable(createToJson: false)
+class PartialUpdateThreadResponse extends _BaseResponse {
+  /// Updated channel
+  late ThreadModel thread;
+
+  /// Create a new instance from a json
+  static PartialUpdateThreadResponse fromJson(Map<String, dynamic> json) =>
+      _$PartialUpdateThreadResponseFromJson(json);
 }

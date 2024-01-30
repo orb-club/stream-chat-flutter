@@ -207,3 +207,37 @@ class PartialUpdateUserRequest extends Equatable {
   @override
   List<Object?> get props => [id, set, unset];
 }
+
+/// Pager options.
+@JsonSerializable(includeIfNull: false)
+class PrevNextPager extends Equatable {
+  /// Creates a new PrevNextPager instance.
+  const PrevNextPager({
+    this.limit,
+    this.next,
+    this.prev,
+  });
+
+  /// Create a new instance from a json
+  factory PrevNextPager.fromJson(Map<String, dynamic> json) =>
+      _$PrevNextPagerFromJson(json);
+
+  /// The amount of items requested from the APIs.
+  final int? limit;
+
+  /// A key used to paginate forward.
+  final String? next;
+
+  /// A key used to paginate backward.
+  final String? prev;
+
+  @override
+  List<Object?> get props => [
+        limit,
+        next,
+        prev,
+      ];
+
+  /// Serialize model to json
+  Map<String, dynamic> toJson() => _$PrevNextPagerToJson(this);
+}

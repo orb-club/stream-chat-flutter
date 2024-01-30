@@ -313,3 +313,27 @@ CreateCallPayload _$CreateCallPayloadFromJson(Map<String, dynamic> json) =>
       ..call = json['call'] == null
           ? null
           : CallPayload.fromJson(json['call'] as Map<String, dynamic>);
+
+QueryThreadsResponse _$QueryThreadsResponseFromJson(
+        Map<String, dynamic> json) =>
+    QueryThreadsResponse()
+      ..duration = json['duration'] as String?
+      ..threads = (json['threads'] as List<dynamic>?)
+              ?.map((e) => ThreadState.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          []
+      ..next = json['next'] as String?
+      ..prev = json['prev'] as String?;
+
+GetThreadResponse _$GetThreadResponseFromJson(Map<String, dynamic> json) =>
+    GetThreadResponse()
+      ..duration = json['duration'] as String?
+      ..thread = json['thread'] == null
+          ? []
+          : ThreadState.fromJson(json['thread'] as Map<String, dynamic>);
+
+PartialUpdateThreadResponse _$PartialUpdateThreadResponseFromJson(
+        Map<String, dynamic> json) =>
+    PartialUpdateThreadResponse()
+      ..duration = json['duration'] as String?
+      ..thread = ThreadModel.fromJson(json['thread'] as Map<String, dynamic>);

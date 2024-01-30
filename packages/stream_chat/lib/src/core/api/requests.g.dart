@@ -85,3 +85,25 @@ Map<String, dynamic> _$PartialUpdateUserRequestToJson(
       'unset': instance.unset,
       'props': instance.props,
     };
+
+PrevNextPager _$PrevNextPagerFromJson(Map<String, dynamic> json) =>
+    PrevNextPager(
+      limit: json['limit'] as int?,
+      next: json['next'] as String?,
+      prev: json['prev'] as String?,
+    );
+
+Map<String, dynamic> _$PrevNextPagerToJson(PrevNextPager instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('limit', instance.limit);
+  writeNotNull('next', instance.next);
+  writeNotNull('prev', instance.prev);
+  return val;
+}
