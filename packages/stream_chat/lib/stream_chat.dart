@@ -44,6 +44,8 @@ export 'src/core/models/mute.dart';
 export 'src/core/models/own_user.dart';
 export 'src/core/models/reaction.dart';
 export 'src/core/models/read.dart';
+export 'src/core/models/thread_model.dart';
+export 'src/core/models/thread_state.dart';
 export 'src/core/models/user.dart';
 export 'src/core/platform_detector/platform_detector.dart';
 export 'src/core/util/extension.dart';

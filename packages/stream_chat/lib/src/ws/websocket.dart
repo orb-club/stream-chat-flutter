@@ -49,8 +49,11 @@ class WebSocket with TimerHelper {
   /// Additional query parameters to be added to the websocket url
   final Map<String, Object?> queryParameters;
 
-  /// WS base url
+  /// HTTP base url
   final String baseUrl;
+
+  /// WS base uri
+  Uri? wsBaseUri;
 
   ///
   final TokenManager tokenManager;
@@ -107,7 +110,7 @@ class WebSocket with TimerHelper {
       _connectionStatusController.stream.distinct();
 
   void _initWebSocketChannel(Uri uri) {
-    _logger?.info('Initiating connection with $baseUrl');
+    _logger?.info('Initiating connection with $uri');
     if (_webSocketChannel != null) {
       _closeWebSocketChannel();
     }
@@ -117,7 +120,7 @@ class WebSocket with TimerHelper {
   }
 
   void _closeWebSocketChannel() {
-    _logger?.info('Closing connection with $baseUrl');
+    _logger?.info('Closing connection with $wsBaseUri');
     if (_webSocketChannel != null) {
       _unsubscribeFromWebSocketChannel();
       _webSocketChannel?.sink
@@ -127,7 +130,7 @@ class WebSocket with TimerHelper {
   }
 
   void _subscribeToWebSocketChannel() {
-    _logger?.info('Started listening to $baseUrl');
+    _logger?.info('Started listening to $wsBaseUri');
     if (_webSocketChannelSubscription != null) {
       _unsubscribeFromWebSocketChannel();
     }
@@ -139,7 +142,7 @@ class WebSocket with TimerHelper {
   }
 
   void _unsubscribeFromWebSocketChannel() {
-    _logger?.info('Stopped listening to $baseUrl');
+    _logger?.info('Stopped listening to $wsBaseUri');
     if (_webSocketChannelSubscription != null) {
       _webSocketChannelSubscription?.cancel();
       _webSocketChannelSubscription = null;
@@ -165,14 +168,21 @@ class WebSocket with TimerHelper {
       'stream-auth-type': token.authType.name,
       ...queryParameters,
     };
+    final baseUrl = this.baseUrl;
     final scheme = baseUrl.startsWith('https') ? 'wss' : 'ws';
     final host = baseUrl.replaceAll(RegExp(r'(^\w+:|^)\/\/'), '');
-    return Uri(
+    final isLocalhost = host.contains('localhost');
+    final finalHost = isLocalhost ? 'localhost' : host;
+    final finalPort = isLocalhost ? 8800 : null;
+    final connectUri = Uri(
       scheme: scheme,
-      host: host,
+      host: finalHost,
+      port: finalPort,
       pathSegments: ['connect'],
       queryParameters: qs,
     );
+    wsBaseUri = connectUri;
+    return connectUri;
   }
 
   bool _connectRequestInProgress = false;

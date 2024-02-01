@@ -2,34 +2,15 @@
 
 import 'dart:async';
 
-import 'package:dio/dio.dart';
-import 'package:logging/logging.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:stream_chat/src/client/channel.dart';
 import 'package:stream_chat/src/client/retry_policy.dart';
-import 'package:stream_chat/src/core/api/attachment_file_uploader.dart';
-import 'package:stream_chat/src/core/api/requests.dart';
-import 'package:stream_chat/src/core/api/responses.dart';
-import 'package:stream_chat/src/core/api/stream_chat_api.dart';
-import 'package:stream_chat/src/core/error/error.dart';
 import 'package:stream_chat/src/core/http/connection_id_manager.dart';
 import 'package:stream_chat/src/core/http/stream_http_client.dart';
 import 'package:stream_chat/src/core/http/token.dart';
 import 'package:stream_chat/src/core/http/token_manager.dart';
-import 'package:stream_chat/src/core/models/attachment_file.dart';
-import 'package:stream_chat/src/core/models/channel_state.dart';
-import 'package:stream_chat/src/core/models/event.dart';
-import 'package:stream_chat/src/core/models/filter.dart';
-import 'package:stream_chat/src/core/models/member.dart';
-import 'package:stream_chat/src/core/models/message.dart';
-import 'package:stream_chat/src/core/models/own_user.dart';
-import 'package:stream_chat/src/core/models/user.dart';
-import 'package:stream_chat/src/core/platform_detector/platform_detector.dart';
 import 'package:stream_chat/src/core/util/utils.dart';
-import 'package:stream_chat/src/db/chat_persistence_client.dart';
-import 'package:stream_chat/src/event_type.dart';
-import 'package:stream_chat/src/ws/connection_status.dart';
 import 'package:stream_chat/src/ws/websocket.dart';
+import 'package:stream_chat/stream_chat.dart';
 import 'package:stream_chat/version.dart';
 import 'package:synchronized/synchronized.dart';
 
@@ -789,6 +770,11 @@ class StreamChatClient {
         sort: sort,
         pagination: pagination,
       );
+
+  Future<List<ThreadState>> queryThreads() async {
+    final response = await _chatApi.thread.queryThreads();
+    return response.threads;
+  }
 
   /// A message search.
   Future<SearchMessagesResponse> search(

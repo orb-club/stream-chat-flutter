@@ -8,16 +8,22 @@ import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:stream_chat_flutter_example/debug/channel_page.dart';
+import 'package:stream_chat_flutter_example/models.dart';
+import 'package:stream_chat_flutter_example/threads/ThreadListPage.dart';
 import 'package:stream_chat_localizations/stream_chat_localizations.dart';
 
+const useLocalEnv = true;
+
 Future<void> main() async {
+  // useProxy('127.0.0.1:8888');
   WidgetsFlutterBinding.ensureInitialized();
 
   /// Create a new instance of [StreamChatClient] passing the apikey obtained
   /// from your project dashboard.
   final client = StreamChatClient(
-    's2dxdhpxd94g',
-    logLevel: Level.OFF,
+    useLocalEnv ? localData.apiKey : remoteData.apiKey,
+    baseURL: useLocalEnv ? localData.baseURL : remoteData.baseURL,
+    logLevel: useLocalEnv ? Level.ALL : Level.OFF,
   );
 
   /// Set the current user and connect the websocket. In a production
@@ -27,18 +33,14 @@ Future<void> main() async {
   /// Please see the following for more information:
   /// https://getstream.io/chat/docs/ios_user_setup_and_tokens/
   await client.connectUser(
-    User(id: 'super-band-9'),
-    '''eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoic3VwZXItYmFuZC05In0.0L6lGoeLwkz0aZRUcpZKsvaXtNEDHBcezVTZ0oPq40A''',
+    useLocalEnv ? localData.user : remoteData.user,
+    useLocalEnv ? localData.userToken : remoteData.userToken,
+    // connectWebSocket: false,
   );
-
-  final channel = client.channel('messaging', id: 'godevs');
-
-  await channel.watch();
 
   runApp(
     MyApp(
       client: client,
-      channel: channel,
     ),
   );
 }
@@ -57,7 +59,6 @@ class MyApp extends StatelessWidget {
   const MyApp({
     super.key,
     required this.client,
-    required this.channel,
   });
 
   /// Instance of Stream Client.
@@ -66,9 +67,6 @@ class MyApp extends StatelessWidget {
   /// set the default user for the application. Performing these actions
   /// trigger a websocket connection allowing for real-time updates.
   final StreamChatClient client;
-
-  /// Instance of the Channel
-  final Channel channel;
 
   @override
   Widget build(BuildContext context) {
@@ -89,10 +87,7 @@ class MyApp extends StatelessWidget {
         client: client,
         child: widget,
       ),
-      home: StreamChannel(
-        channel: channel,
-        child: const ResponsiveChat(),
-      ),
+      home: const ResponsiveChat(),
     );
   }
 }
@@ -160,13 +155,24 @@ class _SplitViewState extends State<SplitView> {
       direction: Axis.horizontal,
       children: <Widget>[
         Flexible(
-          child: ChannelListPage(
-            onTap: (channel) {
-              setState(() {
-                selectedChannel = channel;
-              });
-            },
-            selectedChannel: selectedChannel,
+          child: Column(
+            children: <Widget>[
+              Flexible(
+                child: ChannelListPage(
+                  onTap: (channel) {
+                    setState(() {
+                      selectedChannel = channel;
+                    });
+                  },
+                  selectedChannel: selectedChannel,
+                ),
+              ),
+              Flexible(
+                child: ThreadListPage(onTap: (threadState) {
+                  // TODO
+                }),
+              ),
+            ],
           ),
         ),
         Flexible(

@@ -7,9 +7,7 @@ part of 'thread_state.dart';
 // **************************************************************************
 
 ThreadState _$ThreadStateFromJson(Map<String, dynamic> json) => ThreadState(
-      thread: json['thread'] == null
-          ? null
-          : ThreadModel.fromJson(json['thread'] as Map<String, dynamic>),
+      thread: ThreadModel.fromJson(json),
       replies: (json['replies'] as List<dynamic>?)
           ?.map((e) => Message.fromJson(e as Map<String, dynamic>))
           .toList(),

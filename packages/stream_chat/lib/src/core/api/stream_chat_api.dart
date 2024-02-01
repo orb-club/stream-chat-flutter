@@ -8,6 +8,7 @@ import 'package:stream_chat/src/core/api/general_api.dart';
 import 'package:stream_chat/src/core/api/guest_api.dart';
 import 'package:stream_chat/src/core/api/message_api.dart';
 import 'package:stream_chat/src/core/api/moderation_api.dart';
+import 'package:stream_chat/src/core/api/thread_api.dart';
 import 'package:stream_chat/src/core/api/user_api.dart';
 import 'package:stream_chat/src/core/http/connection_id_manager.dart';
 import 'package:stream_chat/src/core/http/stream_http_client.dart';
@@ -66,6 +67,11 @@ class StreamChatApi {
 
   /// Api dedicated to channel operations
   ChannelApi get channel => _channel ??= ChannelApi(_client);
+
+  ThreadApi? _thread;
+
+  /// Api dedicated to thread operations
+  ThreadApi get thread => _thread ??= ThreadApi(_client);
 
   DeviceApi? _device;
 
