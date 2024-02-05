@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:stream_chat/src/core/models/thread_participant.dart';
 import 'package:stream_chat/src/core/util/serializer.dart';
 import 'package:stream_chat/stream_chat.dart';
 
@@ -14,6 +15,7 @@ class ThreadModel {
     this.createdBy,
     this.replyCount,
     this.participantCount,
+    this.participants,
     this.lastMessageAt,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -45,31 +47,32 @@ class ThreadModel {
   @JsonKey(includeToJson: false)
   final DateTime? lastMessageAt;
 
-  /// The date of channel creation
+  /// The date of thread creation
   @JsonKey(includeToJson: false)
   final DateTime createdAt;
 
-  /// The date of the last channel update
+  /// The date of the last thread update
   @JsonKey(includeToJson: false)
   final DateTime updatedAt;
 
-  /// The date of channel deletion
-  @JsonKey(includeToJson: false)
+  /// The date of thread deletion
   final DateTime? deletedAt;
 
-  /// The count of this channel members
-  @JsonKey(includeToJson: false)
+  /// The count of this thread participants
   final int? participantCount;
 
-  /// The team the channel belongs to
-  @JsonKey(includeToJson: false)
+  /// The list of participants
+  @JsonKey(name: 'thread_participants')
+  final List<ThreadParticipant>? participants;
+
+  /// The count of this thread replies
   final int? replyCount;
 
-  /// The team the channel belongs to
+  /// The title of this thread
   @JsonKey(includeToJson: false)
   final String? title;
 
-  /// Map of custom channel extraData
+  /// Map of custom thread extraData
   final Map<String, Object?> extraData;
 
   /// Known top level fields.
@@ -79,6 +82,7 @@ class ThreadModel {
     'parent_message',
     'created_by',
     'participant_count',
+    'thread_participants',
     'reply_count',
     'last_message_at',
     'created_at',
@@ -102,6 +106,7 @@ class ThreadModel {
     DateTime? updatedAt,
     DateTime? deletedAt,
     int? participantCount,
+    List<ThreadParticipant>? participants,
     int? replyCount,
     String? title,
     Map<String, Object?>? extraData,
@@ -115,6 +120,7 @@ class ThreadModel {
         updatedAt: updatedAt ?? this.updatedAt,
         deletedAt: deletedAt ?? this.deletedAt,
         participantCount: participantCount ?? this.participantCount,
+        participants: participants ?? this.participants,
         replyCount: replyCount ?? this.replyCount,
         title: title ?? this.title,
         extraData: extraData ?? this.extraData,
@@ -131,6 +137,7 @@ class ThreadModel {
         updatedAt: other.updatedAt,
         deletedAt: other.deletedAt,
         participantCount: other.participantCount,
+        participants: other.participants,
         replyCount: other.replyCount,
         title: other.title,
         extraData: {

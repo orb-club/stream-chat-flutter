@@ -771,8 +771,18 @@ class StreamChatClient {
         pagination: pagination,
       );
 
-  Future<List<ThreadState>> queryThreads() async {
-    final response = await _chatApi.thread.queryThreads();
+  Future<List<ThreadState>> queryThreads({
+    bool watch = true,
+    int? replyLimit,
+    int? participantLimit,
+    int pageLimit = 25,
+    String? next,
+  }) async {
+    final response = await _chatApi.thread.queryThreads(
+      replyLimit: replyLimit,
+      participantLimit: participantLimit,
+      pager: PrevNextPager(next: next, limit: pageLimit),
+    );
     return response.threads;
   }
 

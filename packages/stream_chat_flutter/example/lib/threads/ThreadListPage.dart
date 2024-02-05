@@ -24,7 +24,10 @@ class _ThreadListPageState extends State<ThreadListPage> {
   @override
   void initState() {
     super.initState();
-    subscription = _client.queryThreads().asStream().listen((event) {
+    subscription = _client
+        .queryThreads(replyLimit: 3, participantLimit: 10)
+        .asStream()
+        .listen((event) {
       setState(() {
         threads = event;
       });
@@ -43,15 +46,59 @@ class _ThreadListPageState extends State<ThreadListPage> {
           itemBuilder: (context, index) {
             final state = threads[index];
             final pCount = state.thread?.participantCount ?? 0;
-            return ListTile(
-              title: Text(state.thread?.title ?? 'No title'),
-              subtitle: Text('Participants: $pCount'),
-              onTap: () {
-                widget.onTap?.call(state);
-              },
+            return ThreadListItem(
+              state: state,
+              onTap: widget.onTap,
             );
           },
           itemCount: threads.length,
         ),
       );
+}
+
+class ThreadListItem extends StatelessWidget {
+  const ThreadListItem({
+    super.key,
+    required this.state,
+    this.onTap,
+  });
+
+  final ThreadState state;
+  final void Function(ThreadState)? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final replyCount = state.latestReplies?.length ?? 0;
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        if (index == 0) {
+          return Container(
+            color: Colors.grey[200],
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  state.thread?.createdBy?.name ?? 'No author name',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text('Participants: ${state.thread?.participantCount ?? 0}'),
+                Text(state.thread?.parentMessage?.text ?? 'No message text'),
+              ],
+            ),
+          );
+        }
+        final reply = state.latestReplies![index - 1];
+        return ListTile(
+          title: Text(reply.user?.name ?? 'No user name'),
+          subtitle: Text(reply.text ?? 'No message text'),
+        );
+      },
+      itemCount: replyCount + 1,
+      shrinkWrap: true,
+    );
+  }
 }

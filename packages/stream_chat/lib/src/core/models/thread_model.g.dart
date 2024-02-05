@@ -18,6 +18,9 @@ ThreadModel _$ThreadModelFromJson(Map<String, dynamic> json) => ThreadModel(
           : User.fromJson(json['created_by'] as Map<String, dynamic>),
       replyCount: json['reply_count'] as int?,
       participantCount: json['participant_count'] as int?,
+      participants: (json['thread_participants'] as List<dynamic>?)
+          ?.map((e) => ThreadParticipant.fromJson(e as Map<String, dynamic>))
+          .toList(),
       lastMessageAt: json['last_message_at'] == null
           ? null
           : DateTime.parse(json['last_message_at'] as String),
@@ -36,5 +39,10 @@ ThreadModel _$ThreadModelFromJson(Map<String, dynamic> json) => ThreadModel(
 
 Map<String, dynamic> _$ThreadModelToJson(ThreadModel instance) =>
     <String, dynamic>{
+      'deleted_at': instance.deletedAt?.toIso8601String(),
+      'participant_count': instance.participantCount,
+      'thread_participants':
+          instance.participants?.map((e) => e.toJson()).toList(),
+      'reply_count': instance.replyCount,
       'extra_data': instance.extraData,
     };

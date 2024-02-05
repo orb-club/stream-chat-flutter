@@ -33,7 +33,7 @@ class ThreadApi {
   }
 
   /// Requests threads with a given query from the API.
-  Future<QueryThreadsResponse> getThread(
+  Future<GetThreadResponse> getThread(
     String threadId, {
     bool watch = true,
     int? replyLimit,
@@ -50,7 +50,7 @@ class ThreadApi {
         if (participantLimit != null) 'participant_limit': participantLimit,
       },
     );
-    return QueryThreadsResponse.fromJson(response.data);
+    return GetThreadResponse.fromJson(response.data);
   }
 
   /// Updates the [channelId] of type [ChannelType] data with [data]

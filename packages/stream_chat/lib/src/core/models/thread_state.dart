@@ -11,7 +11,7 @@ class ThreadState {
   /// Constructor used for json serialization
   ThreadState({
     this.thread,
-    this.replies,
+    this.latestReplies,
     this.read,
   });
 
@@ -19,7 +19,7 @@ class ThreadState {
   final ThreadModel? thread;
 
   /// A paginated list of channel messages
-  final List<Message>? replies;
+  final List<Message>? latestReplies;
 
   /// The list of channel reads
   final List<Read>? read;
@@ -34,12 +34,12 @@ class ThreadState {
   /// Creates a copy of [ChannelState] with specified attributes overridden.
   ThreadState copyWith({
     ThreadModel? thread,
-    List<Message>? replies,
+    List<Message>? latestReplies,
     List<Read>? read,
   }) =>
       ThreadState(
         thread: thread ?? this.thread,
-        replies: replies ?? this.replies,
+        latestReplies: latestReplies ?? this.latestReplies,
         read: read ?? this.read,
       );
 }

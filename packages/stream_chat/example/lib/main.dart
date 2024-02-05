@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:stream_chat/stream_chat.dart';
+import 'package:stream_chat_example/models.dart';
+
+const useLocalhost = false;
 
 Future<void> main() async {
   /// Create a new instance of [StreamChatClient]
   /// by passing the apikey obtained from your project dashboard.
   final client = StreamChatClient(
-    'b67pax5b2wdq',
-    logLevel: Level.INFO,
+    useLocalhost ? 'hd8szvscpxvd' : 'b67pax5b2wdq',
+    baseURL: useLocalhost ? 'http://localhost:3030' : null,
+    logLevel: Level.ALL,
   );
 
   /// Set the current user. In a production scenario, this should be done using
@@ -14,13 +18,8 @@ Future<void> main() async {
   /// Please see the following for more information:
   /// https://getstream.io/chat/docs/ios_user_setup_and_tokens/
   await client.connectUser(
-    User(
-      id: 'cool-shadow-7',
-      name: 'Cool Shadow',
-      image:
-          'https://getstream.io/random_png/?id=cool-shadow-7&amp;name=Cool+shadow',
-    ),
-    '''eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiY29vbC1zaGFkb3ctNyJ9.gkOlCRb1qgy4joHPaxFwPOdXcGvSPvp6QY0S4mpRkVo''',
+    useLocalhost ? localUserData.user : remoteUserData.user,
+    useLocalhost ? localUserData.token : remoteUserData.token,
   );
 
   /// Creates a channel using the type `messaging` and `godevs`.
