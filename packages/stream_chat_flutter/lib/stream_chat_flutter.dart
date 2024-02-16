@@ -95,7 +95,7 @@ export 'src/stream_chat.dart';
 export 'src/stream_chat_configuration.dart';
 export 'src/theme/stream_chat_theme.dart';
 export 'src/theme/themes.dart';
-export 'src/theme/voice_attachment_theme.dart';
+export 'src/theme/voice_recording_theme.dart';
 export 'src/user/user_mention_tile.dart';
 export 'src/utils/device_segmentation.dart';
 export 'src/utils/extensions.dart';

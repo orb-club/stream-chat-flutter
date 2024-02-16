@@ -440,4 +440,7 @@ class StreamChatLocalizationsJa extends GlobalStreamChatLocalizations {
   @override
   String get markUnreadError =>
       'メッセージを未読にする際にエラーが発生しました。最新の100件のチャンネルメッセージより古い未読メッセージはマークできません。';
+
+  @override
+  String get holdToStartRecording => '押しで録音';
 }

@@ -1,4 +1,3 @@
-export 'audio_recording_message_theme.dart';
 export 'avatar_theme.dart';
 export 'channel_header_theme.dart';
 export 'channel_list_header_theme.dart';
@@ -10,4 +9,4 @@ export 'message_input_theme.dart';
 export 'message_list_view_theme.dart';
 export 'message_theme.dart';
 export 'text_theme.dart';
-export 'voice_attachment_theme.dart';
+export 'voice_recording_theme.dart';

@@ -458,4 +458,7 @@ class StreamChatLocalizationsEn extends GlobalStreamChatLocalizations {
   String get markUnreadError =>
       'Error marking message unread. Cannot mark unread messages older'
       ' than the newest 100 channel messages.';
+
+  @override
+  String get holdToStartRecording => 'Hold to start recording.';
 }

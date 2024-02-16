@@ -464,4 +464,7 @@ Limite de pièces jointes dépassée : il n'est pas possible d'ajouter plus de $
       'Erreur lors de la marque du message comme non lu. Impossible de marquer'
       ' des messages non lus plus anciens que les 100 derniers messages'
       ' du canal.';
+
+  @override
+  String get holdToStartRecording => 'Maintenir pour enregistrer';
 }

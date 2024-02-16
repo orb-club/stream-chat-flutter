@@ -456,4 +456,7 @@ class StreamChatLocalizationsDe extends GlobalStreamChatLocalizations {
       'Fehler beim Markieren der Nachricht als ungelesen. Kann keine älteren'
       ' ungelesenen Nachrichten markieren als die neuesten 100'
       ' Kanalnachrichten.';
+
+  @override
+  String get holdToStartRecording => 'Zum Aufnehmen halten';
 }

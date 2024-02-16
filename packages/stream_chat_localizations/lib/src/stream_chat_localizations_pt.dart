@@ -461,4 +461,7 @@ Não é possível adicionar mais de $limit arquivos de uma vez
   String get markUnreadError =>
       'Erro ao marcar a mensagem como não lida. Não é possível marcar mensagens'
       ' não lidas mais antigas do que as 100 mensagens mais recentes do canal.';
+
+  @override
+  String get holdToStartRecording => 'Segure para gravar';
 }

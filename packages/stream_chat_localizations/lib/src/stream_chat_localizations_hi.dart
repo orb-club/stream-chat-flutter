@@ -456,4 +456,7 @@ class StreamChatLocalizationsHi extends GlobalStreamChatLocalizations {
   String get markUnreadError =>
       'संदेश को अपठित मार्क करने में त्रुटि। सबसे नए 100 चैनल संदेश से पहले के'
       ' सभी अपठित संदेशों को अपठित मार्क नहीं किया जा सकता है।';
+
+  @override
+  String get holdToStartRecording => 'रिकॉर्ड करने के लिए दबाए रखें';
 }

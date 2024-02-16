@@ -17,9 +17,7 @@ void main() {
               child: StreamChatTheme(
                 data: StreamChatThemeData(),
                 child: StreamAudioMessageSendButton(
-                  onRecordingStart: () {},
-                  onRecordingEnd: () {},
-                  onRecordingCanceled: () {},
+                  recordingController: StreamDefaultRecordingController(),
                 ),
               ),
             ),
@@ -51,12 +49,10 @@ void main() {
             body: Center(
               child: StreamChatTheme(
                 data: StreamChatThemeData(
-                  audioRecordingMessageTheme: AudioRecordingMessageThemeData(),
+                  voiceRecordingTheme: StreamVoiceRecordingThemeData.light(),
                 ),
                 child: StreamAudioMessageSendButton(
-                  onRecordingStart: () {},
-                  onRecordingEnd: () {},
-                  onRecordingCanceled: () {},
+                  recordingController: StreamDefaultRecordingController(),
                 ),
               ),
             ),
@@ -87,12 +83,10 @@ void main() {
             body: Center(
               child: StreamChatTheme(
                 data: StreamChatThemeData(
-                  audioRecordingMessageTheme: AudioRecordingMessageThemeData(),
+                  voiceRecordingTheme: StreamVoiceRecordingThemeData.light(),
                 ),
                 child: StreamAudioMessageSendButton(
-                  onRecordingStart: onRecordingStart,
-                  onRecordingEnd: () {},
-                  onRecordingCanceled: () {},
+                  recordingController: StreamDefaultRecordingController(),
                 ),
               ),
             ),
@@ -118,12 +112,10 @@ void main() {
             body: Center(
               child: StreamChatTheme(
                 data: StreamChatThemeData(
-                  audioRecordingMessageTheme: AudioRecordingMessageThemeData(),
+                  voiceRecordingTheme: StreamVoiceRecordingThemeData.light(),
                 ),
                 child: StreamAudioMessageSendButton(
-                  onRecordingStart: () {},
-                  onRecordingEnd: () {},
-                  onRecordingCanceled: onRecordingCanceled,
+                  recordingController: StreamDefaultRecordingController(),
                 ),
               ),
             ),
@@ -139,6 +131,36 @@ void main() {
       );
       await gesture.moveTo(position + const Offset(-300, 0));
       verify(onRecordingCanceled.call);
+    });
+
+    testWidgets('should show call the locked callback', (tester) async {
+      final onRecordingLocked = MockVoidCallback();
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Center(
+              child: StreamChatTheme(
+                data: StreamChatThemeData(
+                  voiceRecordingTheme: StreamVoiceRecordingThemeData.light(),
+                ),
+                child: StreamAudioMessageSendButton(
+                  recordingController: StreamDefaultRecordingController(),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+
+      final position =
+          tester.getCenter(find.byType(StreamAudioMessageSendButton));
+      final gesture = await tester.startGesture(position, pointer: 1);
+      await tester.pumpAndSettle(
+        const Duration(milliseconds: 500),
+      );
+      await gesture.moveTo(position + const Offset(-300, 0));
+      verify(onRecordingLocked.call);
     });
   });
 }

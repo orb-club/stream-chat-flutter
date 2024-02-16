@@ -466,4 +466,7 @@ Attenzione: il limite massimo di $limit file è stato superato.
       'Errore durante la marcatura del messaggio come non letto. Impossibile'
       ' marcare messaggi non letti più vecchi dei più recenti 100 messaggi'
       ' del canale.';
+
+  @override
+  String get holdToStartRecording => 'Tieni premuto per registrare.';
 }

@@ -12,6 +12,7 @@ class StreamVoiceRecordingThemeData with Diagnosticable {
     required this.sliderTheme,
     required this.listPlayerTheme,
     required this.playerTheme,
+    required this.controlsTheme,
   });
 
   /// {@template ThemeDataLight}
@@ -23,6 +24,7 @@ class StreamVoiceRecordingThemeData with Diagnosticable {
       sliderTheme: StreamVoiceRecordingSliderTheme.light(),
       listPlayerTheme: StreamVoiceRecordingListPlayerThemeData.light(),
       playerTheme: StreamVoiceRecordingPlayerThemeData.light(),
+      controlsTheme: VoiceRecordingControlsThemeData.light(),
     );
   }
 
@@ -35,6 +37,7 @@ class StreamVoiceRecordingThemeData with Diagnosticable {
       sliderTheme: StreamVoiceRecordingSliderTheme.dark(),
       listPlayerTheme: StreamVoiceRecordingListPlayerThemeData.dark(),
       playerTheme: StreamVoiceRecordingPlayerThemeData.dark(),
+      controlsTheme: VoiceRecordingControlsThemeData.dark(),
     );
   }
 
@@ -50,6 +53,8 @@ class StreamVoiceRecordingThemeData with Diagnosticable {
   /// The theme for the player widget.
   final StreamVoiceRecordingPlayerThemeData playerTheme;
 
+  final VoiceRecordingControlsThemeData controlsTheme;
+
   /// {@template ThemeDataMerge}
   /// Used to merge the values of another theme data object into this.
   /// {@endtemplate}
@@ -60,6 +65,7 @@ class StreamVoiceRecordingThemeData with Diagnosticable {
       sliderTheme: sliderTheme.merge(other.sliderTheme),
       listPlayerTheme: listPlayerTheme.merge(other.listPlayerTheme),
       playerTheme: playerTheme.merge(other.playerTheme),
+      controlsTheme: controlsTheme.merge(other.controlsTheme),
     );
   }
 
@@ -70,7 +76,8 @@ class StreamVoiceRecordingThemeData with Diagnosticable {
       ..add(DiagnosticsProperty('loadingTheme', loadingTheme))
       ..add(DiagnosticsProperty('sliderTheme', sliderTheme))
       ..add(DiagnosticsProperty('listPlayerTheme', listPlayerTheme))
-      ..add(DiagnosticsProperty('playerTheme', playerTheme));
+      ..add(DiagnosticsProperty('playerTheme', playerTheme))
+      ..add(DiagnosticsProperty('controlsTheme', controlsTheme));
   }
 }
 
@@ -457,5 +464,233 @@ class StreamVoiceRecordingPlayerThemeData with Diagnosticable {
       ..add(DiagnosticsProperty('fileTypeIcon', fileTypeIcon))
       ..add(DiagnosticsProperty('fileSizeTextStyle', fileSizeTextStyle))
       ..add(DiagnosticsProperty('timerTextStyle', timerTextStyle));
+  }
+}
+
+/// {@template VoiceRecordingControlsTheme}
+/// A class that defines the theme for the voice recording controls
+/// {@endtemplate}
+class VoiceRecordingControlsThemeData with Diagnosticable {
+  /// {@macro VoiceRecordingControlsTheme}
+  VoiceRecordingControlsThemeData({
+    required this.audioButtonColor,
+    required this.audioButtonBannerColor,
+    required this.audioButtonPressedColor,
+    required this.audioButtonPressedBackgroundColor,
+    required this.lockButtonForegroundColor,
+    required this.lockButtonForegroundColorLocked,
+    required this.lockButtonBackgroundColor,
+    required this.recordingIndicatorColorIdle,
+    required this.recordingIndicatorColorActive,
+    required this.cancelTextColor,
+  });
+
+  /// {@macro ThemeDataLight}
+  factory VoiceRecordingControlsThemeData.light() {
+    return VoiceRecordingControlsThemeData(
+      audioButtonColor: const Color(0XFFFFFFFF),
+      audioButtonBannerColor: const Color(0xFF747881),
+      audioButtonPressedColor: const Color(0xFF015DFF),
+      audioButtonPressedBackgroundColor: const Color(0xFFDBDDE1),
+      lockButtonForegroundColor: const Color(0xFF747881),
+      lockButtonForegroundColorLocked: const Color(0xFF015DFF),
+      lockButtonBackgroundColor: const Color(0xFFDBDDE1),
+      recordingIndicatorColorIdle: const Color(0xFF747881),
+      recordingIndicatorColorActive: const Color(0xFFFF515A),
+      cancelTextColor: const Color(0xFF747881),
+    );
+  }
+
+  /// {@macro ThemeDataDark}
+  factory VoiceRecordingControlsThemeData.dark() {
+    return VoiceRecordingControlsThemeData(
+      audioButtonColor: const Color(0XFF000000),
+      audioButtonBannerColor: const Color(0xFF747881),
+      audioButtonPressedColor: const Color(0xFF015DFF),
+      audioButtonPressedBackgroundColor: const Color(0xFFDBDDE1),
+      lockButtonForegroundColor: const Color(0xFF747881),
+      lockButtonForegroundColorLocked: const Color(0xFF015DFF),
+      lockButtonBackgroundColor: const Color(0xFFDBDDE1),
+      recordingIndicatorColorIdle: const Color(0xFF747881),
+      recordingIndicatorColorActive: const Color(0xFFFF515A),
+      cancelTextColor: const Color(0xFF747881),
+    );
+  }
+
+  /// The color of the audio button
+  final Color audioButtonColor;
+
+  /// The color of the audio button when pressed
+  final Color audioButtonPressedColor;
+
+  /// The background color of the audio button when pressed
+  final Color audioButtonPressedBackgroundColor;
+
+  /// The color of the audio button banner
+  final Color audioButtonBannerColor;
+
+  /// The color of the lock button foreground
+  final Color lockButtonForegroundColor;
+
+  /// The color of the lock button foreground when locked
+  final Color lockButtonForegroundColorLocked;
+
+  /// The color of the lock button background
+  final Color lockButtonBackgroundColor;
+
+  /// The color of the recording indicator when idle
+  final Color recordingIndicatorColorIdle;
+
+  /// The color of the recording indicator when active
+  final Color recordingIndicatorColorActive;
+
+  /// The color of the cancel text
+  final Color cancelTextColor;
+
+  /// Creates a copy of this theme but with the given fields replaced
+  /// with the new values.
+  VoiceRecordingControlsThemeData copyWith({
+    Color? audioButtonColor,
+    Color? audioButtonBannerColor,
+    Color? audioButtonPressedColor,
+    Color? audioButtonPressedBackgroundColor,
+    Color? lockButtonForegroundColor,
+    Color? lockButtonForegroundColorLocked,
+    Color? lockButtonBackgroundColor,
+    Color? recordingIndicatorColorIdle,
+    Color? recordingIndicatorColorActive,
+    Color? cancelTextColor,
+  }) {
+    return VoiceRecordingControlsThemeData(
+      audioButtonColor: audioButtonColor ?? this.audioButtonColor,
+      audioButtonBannerColor:
+          audioButtonBannerColor ?? this.audioButtonBannerColor,
+      audioButtonPressedColor:
+          audioButtonPressedColor ?? this.audioButtonPressedColor,
+      audioButtonPressedBackgroundColor: audioButtonPressedBackgroundColor ??
+          this.audioButtonPressedBackgroundColor,
+      lockButtonForegroundColor:
+          lockButtonForegroundColor ?? this.lockButtonForegroundColor,
+      lockButtonForegroundColorLocked: lockButtonForegroundColorLocked ??
+          this.lockButtonForegroundColorLocked,
+      lockButtonBackgroundColor:
+          lockButtonBackgroundColor ?? this.lockButtonBackgroundColor,
+      recordingIndicatorColorIdle:
+          recordingIndicatorColorIdle ?? this.recordingIndicatorColorIdle,
+      recordingIndicatorColorActive:
+          recordingIndicatorColorActive ?? this.recordingIndicatorColorActive,
+      cancelTextColor: cancelTextColor ?? this.cancelTextColor,
+    );
+  }
+
+  /// Linearly interpolate between two themes.
+  VoiceRecordingControlsThemeData lerp(
+    covariant VoiceRecordingControlsThemeData? other,
+    double t,
+  ) {
+    if (other is! VoiceRecordingControlsThemeData) {
+      return this;
+    }
+
+    return VoiceRecordingControlsThemeData(
+      audioButtonColor:
+          Color.lerp(audioButtonColor, other.audioButtonColor, t)!,
+      audioButtonBannerColor:
+          Color.lerp(audioButtonBannerColor, other.audioButtonBannerColor, t)!,
+      audioButtonPressedColor: Color.lerp(
+          audioButtonPressedColor, other.audioButtonPressedColor, t)!,
+      audioButtonPressedBackgroundColor: Color.lerp(
+          audioButtonPressedBackgroundColor,
+          other.audioButtonPressedBackgroundColor,
+          t)!,
+      lockButtonForegroundColor: Color.lerp(
+          lockButtonForegroundColor, other.lockButtonForegroundColor, t)!,
+      lockButtonForegroundColorLocked: Color.lerp(
+          lockButtonForegroundColorLocked,
+          other.lockButtonForegroundColorLocked,
+          t)!,
+      lockButtonBackgroundColor: Color.lerp(
+          lockButtonBackgroundColor, other.lockButtonBackgroundColor, t)!,
+      recordingIndicatorColorIdle: Color.lerp(
+          recordingIndicatorColorIdle, other.recordingIndicatorColorIdle, t)!,
+      recordingIndicatorColorActive: Color.lerp(recordingIndicatorColorActive,
+          other.recordingIndicatorColorActive, t)!,
+      cancelTextColor: Color.lerp(cancelTextColor, other.cancelTextColor, t)!,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is VoiceRecordingControlsThemeData &&
+        other.audioButtonColor == audioButtonColor &&
+        other.audioButtonBannerColor == audioButtonBannerColor &&
+        other.audioButtonPressedColor == audioButtonPressedColor &&
+        other.audioButtonPressedBackgroundColor ==
+            audioButtonPressedBackgroundColor &&
+        other.lockButtonForegroundColor == lockButtonForegroundColor &&
+        other.lockButtonForegroundColorLocked ==
+            lockButtonForegroundColorLocked &&
+        other.lockButtonBackgroundColor == lockButtonBackgroundColor &&
+        other.recordingIndicatorColorIdle == recordingIndicatorColorIdle &&
+        other.recordingIndicatorColorActive == recordingIndicatorColorActive &&
+        other.cancelTextColor == cancelTextColor;
+  }
+
+  @override
+  int get hashCode =>
+      audioButtonColor.hashCode ^
+      audioButtonBannerColor.hashCode ^
+      audioButtonPressedColor.hashCode ^
+      audioButtonPressedBackgroundColor.hashCode ^
+      lockButtonForegroundColor.hashCode ^
+      lockButtonForegroundColorLocked.hashCode ^
+      lockButtonBackgroundColor.hashCode ^
+      recordingIndicatorColorIdle.hashCode ^
+      recordingIndicatorColorActive.hashCode ^
+      cancelTextColor.hashCode;
+
+  /// Merges one [VoiceRecordingControlsThemeData] with the another
+  VoiceRecordingControlsThemeData merge(
+      VoiceRecordingControlsThemeData? other) {
+    if (other == null) return this;
+    return copyWith(
+      audioButtonColor: other.audioButtonColor,
+      audioButtonBannerColor: other.audioButtonBannerColor,
+      audioButtonPressedColor: other.audioButtonPressedColor,
+      audioButtonPressedBackgroundColor:
+          other.audioButtonPressedBackgroundColor,
+      lockButtonForegroundColor: other.lockButtonForegroundColor,
+      lockButtonForegroundColorLocked: other.lockButtonForegroundColorLocked,
+      lockButtonBackgroundColor: other.lockButtonBackgroundColor,
+      recordingIndicatorColorIdle: other.recordingIndicatorColorIdle,
+      recordingIndicatorColorActive: other.recordingIndicatorColorActive,
+      cancelTextColor: other.cancelTextColor,
+    );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('audioButtonColor', audioButtonColor))
+      ..add(
+          DiagnosticsProperty('audioButtonBannerColor', audioButtonBannerColor))
+      ..add(DiagnosticsProperty(
+          'audioButtonPressedColor', audioButtonPressedColor))
+      ..add(DiagnosticsProperty('audioButtonPressedBackgroundColor',
+          audioButtonPressedBackgroundColor))
+      ..add(DiagnosticsProperty(
+          'lockButtonForegroundColor', lockButtonForegroundColor))
+      ..add(DiagnosticsProperty(
+          'lockButtonForegroundColorLocked', lockButtonForegroundColorLocked))
+      ..add(DiagnosticsProperty(
+          'lockButtonBackgroundColor', lockButtonBackgroundColor))
+      ..add(DiagnosticsProperty(
+          'recordingIndicatorColorIdle', recordingIndicatorColorIdle))
+      ..add(DiagnosticsProperty(
+          'recordingIndicatorColorActive', recordingIndicatorColorActive))
+      ..add(DiagnosticsProperty('cancelTextColor', cancelTextColor));
   }
 }

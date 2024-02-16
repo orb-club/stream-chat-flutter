@@ -462,4 +462,7 @@ class StreamChatLocalizationsCa extends GlobalStreamChatLocalizations {
       'Error en marcar el missatge com a no llegit. No es poden marcar'
       ' missatges no llegits més antics que els 100 missatges més recents del'
       ' canal.';
+
+  @override
+  String get holdToStartRecording => 'Mantén premut per enregistrar.';
 }
