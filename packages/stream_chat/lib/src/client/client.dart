@@ -1633,7 +1633,25 @@ class ClientState {
     _eventsSubscription?.add(
       _client.on(EventType.userUpdated).listen((event) {
         if (event.user!.id == currentUser!.id) {
-          currentUser = OwnUser.fromUser(event.user!);
+          final eventUser = event.user!;
+
+          // Copy the current user with the updated fields
+          // from [eventUser] to avoid clearing user data
+          // such as [currentUser.channelMutes] or
+          // [currentUser.devices].
+          currentUser = currentUser?.copyWith(
+            id: eventUser.id,
+            role: eventUser.role,
+            image: eventUser.image,
+            createdAt: eventUser.createdAt,
+            updatedAt: eventUser.updatedAt,
+            lastActive: eventUser.lastActive,
+            online: eventUser.online,
+            banned: eventUser.banned,
+            extraData: eventUser.extraData,
+            teams: eventUser.teams,
+            language: eventUser.language,
+          );
         }
         updateUser(event.user);
       }),
