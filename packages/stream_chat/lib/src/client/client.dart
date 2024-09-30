@@ -1642,13 +1642,16 @@ class ClientState {
           currentUser = currentUser?.copyWith(
             id: eventUser.id,
             role: eventUser.role,
+            // Using extraData value in order to not use id as name.
+            name: eventUser.extraData['name'] as String?,
             image: eventUser.image,
             createdAt: eventUser.createdAt,
             updatedAt: eventUser.updatedAt,
             lastActive: eventUser.lastActive,
+            extraData: eventUser.extraData,
             online: eventUser.online,
             banned: eventUser.banned,
-            extraData: eventUser.extraData,
+            banExpires: eventUser.banExpires,
             teams: eventUser.teams,
             language: eventUser.language,
           );
